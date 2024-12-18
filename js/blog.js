@@ -2,97 +2,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const postsContainer = document.getElementById('posts-container');
     const searchInput = document.getElementById('search-input');
     const categoryFilter = document.getElementById('category-filter');
-    const paginationContainer = document.getElementById('pagination');
+    const prevPageBtn = document.getElementById('prev-page');
+    const nextPageBtn = document.getElementById('next-page');
+    const pageInfo = document.getElementById('page-info');
 
-    // Sample posts data (replace with your actual data or fetch from JSON)
-    const allPosts = [
-        {
-            id: 1,
-            title: "Introduction to Modern Web Development",
-            summary: "Exploring the latest trends and technologies in web development",
-            category: "Web Development",
-            date: "2024-02-15",
-            image: "https://via.placeholder.com/400x250",
-            content: "Full article content would go here..."
-        },
-        {
-            id: 2,
-            title: "Understanding React Hooks",
-            summary: "A deep dive into React Hooks and their practical applications",
-            category: "React",
-            date: "2024-03-20",
-            image: "https://via.placeholder.com/400x250",
-            content: "Comprehensive explanation of React Hooks..."
-        },
-        // Add more posts here
-    ];
-
-    const POSTS_PER_PAGE = 6;
+    let allPosts = [];
     let currentPage = 1;
+    const postsPerPage = 6;
 
-    function renderPosts(posts) {
-        postsContainer.innerHTML = '';
-        
-        const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-        const endIndex = startIndex + POSTS_PER_PAGE;
-        const paginatedPosts = posts.slice(startIndex, endIndex);
-
-        paginatedPosts.forEach(post => {
-            const postElement = document.createElement('div');
-            postElement.classList.add('bg-white', 'rounded-lg', 'shadow-md', 'overflow-hidden', 'hover:shadow-xl', 'transition-shadow', 'duration-300');
-            
-            postElement.innerHTML = `
-                <img src="${post.image}" alt="${post.title}" class="w-full h-48 object-cover">
-                <div class="p-5">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm text-blue-600 bg-blue-50 px-2 py-1 rounded">
-                            ${post.category}
-                        </span>
-                        <span class="text-sm text-gray-500">
-                            ${post.date}
-                        </span>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">
-                        ${post.title}
-                    </h3>
-                    <p class="text-gray-600 mb-4">
-                        ${post.summary}
-                    </p>
-                    <a 
-                        href="article.html?id=${post.id}" 
-                        class="text-blue-600 hover:text-blue-800 font-medium"
-                    >
-                        Read More →
-                    </a>
-                </div>
-            `;
-
-            postsContainer.appendChild(postElement);
-        });
+    async function loadPosts() {
+        try {
+            const response = await fetch('data/posts.json');
+            allPosts = await response.json();
+            renderPosts();
+        } catch (error) {
+            console.error('Error loading posts:', error);
+            postsContainer.innerHTML = '<p>Unable to load posts</p>';
+        }
     }
 
-    function renderPagination(totalPosts) {
-        const totalPages = Math.ceil(totalPosts.length / POSTS_PER_PAGE);
-        paginationContainer.innerHTML = '';
+    function renderPosts(filteredPosts = allPosts) {
+        const startIndex = (currentPage - 1) * postsPerPage;
+        const endIndex = startIndex + postsPerPage;
+        const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
 
-        for (let i = 1; i <= totalPages; i++) {
-            const pageButton = document.createElement('button');
-            pageButton.textContent = i;
-            pageButton.classList.add(
-                'px-4', 
-                'py-2', 
-                'border', 
-                'rounded', 
-                currentPage === i ? 'bg-blue-600 text-white' : 'bg-white text-blue-600'
-            );
-            
-            pageButton.addEventListener('click', () => {
-                currentPage = i;
-                filterPosts();
-            });
+        postsContainer.innerHTML = paginatedPosts.map(post => `
+            <div class="post-card">
+                <img src="${post.thumbnail}" alt="${post.title}">
+                <div class="post-card-content">
+                    <h3>${post.title}</h3>
+                    <p>${post.excerpt}</p>
+                    <div class="post-meta">
+                        <span>${new Date(post.date).toLocaleDateString()}</span>
+                        <span class="category">${post.category}</span>
+                        <a href="article.html?id=${post.id}">Read More</a>
+                    </div>
+                </div>
+            </div>
+        `).join('');
 
-            paginationContainer.appendChild(pageButton);
-        }
+        updatePagination(filteredPosts);
+    }
+
+    function updatePagination(filteredPosts) {
+        const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+        
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages;
     }
 
     function filterPosts() {
@@ -100,19 +57,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedCategory = categoryFilter.value;
 
         const filteredPosts = allPosts.filter(post => 
-            (selectedCategory === '' || post.category === selectedCategory) &&
-            (post.title.toLowerCase().includes(searchTerm) || 
-             post.summary.toLowerCase().includes(searchTerm))
+            (searchTerm === '' || post.title.toLowerCase().includes(searchTerm)) &&
+            (selectedCategory === '' || post.category.toLowerCase() === selectedCategory)
         );
 
+        currentPage = 1;
         renderPosts(filteredPosts);
-        renderPagination(filteredPosts);
     }
 
-    // Event Listeners
     searchInput.addEventListener('input', filterPosts);
     categoryFilter.addEventListener('change', filterPosts);
 
-    // Initial render
-    filterPosts();
+    prevPageBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPosts();
+        }
+    });
+
+    nextPageBtn.addEventListener('click', () => {
+        const totalPages = Math.ceil(allPosts.length / postsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderPosts();
+        }
+    });
+
+    loadPosts();
 });
