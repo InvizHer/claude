@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Your Name</title>
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/tailwind.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation (similar to index.html) -->
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+        <!-- Navigation content from index.html -->
+    </nav>
+
+    <!-- Blog Posts Section -->
+    <main class="pt-24 container mx-auto px-4">
+        <section class="mb-12">
+            <h1 class="text-4xl font-bold text-center mb-8">Blog Posts</h1>
+            
+            <!-- Search and Filter -->
+            <div class="max-w-4xl mx-auto mb-8 flex space-x-4">
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    placeholder="Search posts..." 
+                    class="flex-grow p-3 border rounded-lg"
+                >
+                <select 
+                    id="category-filter" 
+                    class="p-3 border rounded-lg"
+                >
+                    <option value="">All Categories</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="React">React</option>
+                </select>
+            </div>
+
+            <!-- Posts Grid -->
+            <div 
+                id="posts-container" 
+                class="grid md:grid-cols-3 gap-6"
+            >
+                <!-- Posts will be dynamically populated -->
+            </div>
+
+            <!-- Pagination -->
+            <div 
+                id="pagination" 
+                class="flex justify-center space-x-2 mt-8"
+            >
+                <!-- Pagination buttons will be dynamically added -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (similar to index.html) -->
+    <footer class="bg-gray-800 text-white py-8">
+        <!-- Footer content from index.html -->
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/blog.js"></script>
+</body>
+</html>
