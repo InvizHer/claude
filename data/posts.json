@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "title": "Introduction to Modern Web Development",
+        "excerpt": "A comprehensive guide to the latest trends and technologies shaping web development in 2024.",
+        "content": "<h2>Modern Web Development Landscape</h2><p>Web development continues to evolve rapidly, with new frameworks, tools, and best practices emerging constantly.</p><h3>Key Technologies</h3><ul><li>React for frontend development</li><li>Node.js for backend services</li><li>Progressive Web Apps (PWAs)</li></ul><p>Modern web developers must stay adaptable and continuously learn new skills.</p>",
+        "category": "technology",
+        "date": "2024-01-15",
+        "thumbnail": "assets/images/posts/tech-post.jpg",
+        "author": "Your Name"
+    },
+    {
+        "id": 2,
+        "title": "Mastering React Hooks",
+        "excerpt": "Deep dive into React Hooks and modern React development practices for creating efficient web applications.",
+        "content": "<h2>Understanding React Hooks</h2><p>React Hooks revolutionized how we write React components, providing a more direct way to use state and other React features.</p><h3>Key Hooks to Learn</h3><ul><li>useState for state management</li><li>useEffect for side effects</li><li>useContext for global state</li></ul><p>Hooks make your code more readable and maintainable.</p>",
+        "category": "programming",
+        "date": "2024-02-20", 
+        "thumbnail": "assets/images/posts/react-post.jpg",
+        "author": "Your Name"
+    },
+    {
+        "id": 3,
+        "title": "Design Principles for Modern Websites",
+        "excerpt": "Exploring key design principles that create engaging and user-friendly web experiences.",
+        "content": "<h2>User-Centered Design</h2><p>Modern web design focuses on creating intuitive and accessible user interfaces.</p><h3>Key Principles</h3><ul><li>Responsive Design</li><li>Minimalist Aesthetics</li><li>Accessibility</li></ul><p>Great design is about solving user problems effectively.</p>",
+        "category": "design",
+        "date": "2024-03-10",
+        "thumbnail": "assets/images/posts/design-post.jpg",
+        "author": "Your Name"
+    }
+]
