@@ -3,81 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Article - Your Name</title>
-    
-    <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/tailwind.css">
+    <title>Article Title - Your Name</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/article.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-<body class="bg-gray-50">
-    <!-- Navigation (similar to other pages) -->
-    <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
-        <!-- Navigation content from index.html -->
-    </nav>
-
-    <!-- Article Section -->
-    <main class="pt-24 container mx-auto px-4 max-w-4xl">
-        <article class="bg-white rounded-lg shadow-md p-8">
-            <!-- Article Header -->
-            <header class="mb-8">
-                <h1 id="article-title" class="text-4xl font-bold mb-4">Article Title</h1>
-                <div class="flex justify-between items-center text-gray-600">
-                    <div>
-                        <span id="article-category" class="bg-blue-50 text-blue-600 px-2 py-1 rounded mr-2">Category</span>
-                        <span id="article-author">By Your Name</span>
-                    </div>
-                    <time id="article-date" class="text-sm">Publication Date</time>
-                </div>
-            </header>
-
-            <!-- Article Image -->
-            <img 
-                id="article-image" 
-                src="https://via.placeholder.com/1200x600" 
-                alt="Article Image" 
-                class="w-full h-96 object-cover rounded-lg mb-8"
-            >
-
-            <!-- Article Content -->
-            <div id="article-content" class="prose max-w-none">
-                <!-- Dynamic content will be inserted here -->
-                <p>Article content will be dynamically loaded based on the post ID.</p>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="index.html">Your Name</a>
             </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="blog.html">Blog</a></li>
+            </ul>
+        </nav>
+    </header>
 
-            <!-- Share Options -->
-            <div class="mt-8 pt-8 border-t">
-                <h3 class="text-2xl font-semibold mb-4">Share This Article</h3>
-                <div class="flex space-x-4">
-                    <button class="btn btn-secondary flex items-center">
-                        Facebook
-                    </button>
-                    <button class="btn btn-secondary flex items-center">
-                        Twitter
-                    </button>
-                    <button class="btn btn-secondary flex items-center">
-                        LinkedIn
-                    </button>
-                </div>
-            </div>
-
-            <!-- Related Posts -->
-            <section class="mt-12">
-                <h3 class="text-2xl font-semibold mb-6">Related Posts</h3>
-                <div id="related-posts" class="grid md:grid-cols-3 gap-6">
-                    <!-- Related posts will be dynamically populated -->
-                </div>
-            </section>
+    <main class="article-page">
+        <article id="article-container">
+            <!-- Article content will be dynamically loaded -->
         </article>
+
+        <section class="related-posts">
+            <h2>Related Posts</h2>
+            <div id="related-posts-container">
+                <!-- Related posts will be dynamically loaded -->
+            </div>
+        </section>
+
+        <section class="share-section">
+            <h3>Share this Article</h3>
+            <div class="share-buttons">
+                <a href="#" class="share-twitter"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="#" class="share-linkedin"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                <a href="#" class="share-facebook"><i class="fab fa-facebook"></i> Facebook</a>
+            </div>
+        </section>
     </main>
 
-    <!-- Footer (similar to other pages) -->
-    <footer class="bg-gray-800 text-white py-8">
-        <!-- Footer content from index.html -->
+    <footer class="footer">
+        <p>&copy; 2024 Your Name. All Rights Reserved.</p>
     </footer>
 
-    <!-- JavaScript -->
     <script src="js/article.js"></script>
 </body>
 </html>
