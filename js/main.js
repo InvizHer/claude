@@ -1,76 +1,63 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle
-    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
+    // Mobile Navigation Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
 
-    mobileMenuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
     });
 
-    // Featured Posts Population
-    const featuredPostsContainer = document.getElementById('featured-posts');
-    
-    // Sample posts data (replace with your actual data or fetch from JSON)
-    const featuredPosts = [
-        {
-            id: 1,
-            title: "Introduction to Modern Web Development",
-            summary: "Exploring the latest trends and technologies in web development",
-            category: "Web Development",
-            date: "2024-02-15",
-            image: "https://via.placeholder.com/400x250"
-        },
-        {
-            id: 2,
-            title: "Understanding React Hooks",
-            summary: "A deep dive into React Hooks and their practical applications",
-            category: "React",
-            date: "2024-03-20",
-            image: "https://via.placeholder.com/400x250"
-        },
-        {
-            id: 3,
-            title: "Design Patterns in JavaScript",
-            summary: "Implementing common design patterns to write cleaner code",
-            category: "JavaScript",
-            date: "2024-04-10",
-            image: "https://via.placeholder.com/400x250"
-        }
-    ];
-
-    // Populate Featured Posts
-    if (featuredPostsContainer) {
-        featuredPosts.forEach(post => {
-            const postElement = document.createElement('div');
-            postElement.classList.add('bg-white', 'rounded-lg', 'shadow-md', 'overflow-hidden', 'hover:shadow-xl', 'transition-shadow', 'duration-300');
-            
-            postElement.innerHTML = `
-                <img src="${post.image}" alt="${post.title}" class="w-full h-48 object-cover">
-                <div class="p-5">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="text-sm text-blue-600 bg-blue-50 px-2 py-1 rounded">
-                            ${post.category}
-                        </span>
-                        <span class="text-sm text-gray-500">
-                            ${post.date}
-                        </span>
-                    </div>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">
-                        ${post.title}
-                    </h3>
-                    <p class="text-gray-600 mb-4">
-                        ${post.summary}
-                    </p>
-                    <a 
-                        href="article.html?id=${post.id}" 
-                        class="text-blue-600 hover:text-blue-800 font-medium"
-                    >
-                        Read More →
-                    </a>
-                </div>
-            `;
-
-            featuredPostsContainer.appendChild(postElement);
+    // Close mobile menu when a link is clicked
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
         });
+    });
+
+    // Load Recent Posts on Home Page
+    async function loadRecentPosts() {
+        const postsContainer = document.getElementById('recent-posts-container');
+        
+        if (!postsContainer) return;
+
+        try {
+            const response = await fetch('data/posts.json');
+            const posts = await response.json();
+
+            // Sort posts by date and take first 3
+            const recentPosts = posts
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 3);
+
+            postsContainer.innerHTML = recentPosts.map(post => `
+                <div class="post-card">
+                    <img src="${post.thumbnail}" alt="${post.title}">
+                    <h3>${post.title}</h3>
+                    <p>${post.excerpt}</p>
+                    <div class="post-meta">
+                        <span>${new Date(post.date).toLocaleDateString()}</span>
+                        <a href="article.html?id=${post.id}">Read More</a>
+                    </div>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error('Error loading posts:', error);
+            postsContainer.innerHTML = '<p>Unable to load posts</p>';
+        }
     }
+
+    // Smooth Scrolling for Internal Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Initialize functions
+    loadRecentPosts();
 });
